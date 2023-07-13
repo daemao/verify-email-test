@@ -18,7 +18,7 @@ class SignUpController extends Controller
         $user->password = Hash::make($formData['password']);
         $user->verify_code=Str::random(6);
         $user->save();
-        Mail::to('yersultan.nagashtay@nu.edu.kz')->send(new VerifyCodeEmail($user->verify_code));//this is my personal email, since using sandbox mailgun
+        Mail::to('yersultan.nagashtay@nu.edu.kz')->queue(new VerifyCodeEmail($user->verify_code));//this is my personal email, since using sandbox mailgun
         return response()->json(['status'=>'Verify code was sent to your email'],201);
     }
 }
